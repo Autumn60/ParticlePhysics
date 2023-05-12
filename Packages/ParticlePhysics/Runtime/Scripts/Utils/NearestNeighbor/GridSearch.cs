@@ -26,8 +26,6 @@ namespace ParticlePhysics.Utils.NearestNeighbour
 
             this.GridSearchCS = (ComputeShader)Resources.Load("GridSearch", typeof(ComputeShader));
 
-            InitializeBuffer(objNum);
-
             Debug.Log("=== Instantiated Grid Sort === \n" +
                       "Size of Grid Search Area : \t" + gridSize + "\n" +
                       "Total number of cells in the grid : \t" + this.totalCellNum + "\n" +
@@ -37,8 +35,6 @@ namespace ParticlePhysics.Utils.NearestNeighbour
 
         protected override void InitializeBuffer(int objectNum)
         {
-            // ここで宣言しているBufferの要素数を動的に変更できるといい。
-            // GridSort()の入力Bufferをコピーする形で対応できないか？
             gridBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, objectNum, Marshal.SizeOf(typeof(Uint2)));
             gridPingPongBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, objectNum, Marshal.SizeOf(typeof(Uint2)));
             gridIndicesBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, totalCellNum, Marshal.SizeOf(typeof(Uint2)));

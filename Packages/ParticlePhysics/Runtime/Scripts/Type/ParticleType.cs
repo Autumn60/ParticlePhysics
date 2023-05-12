@@ -25,13 +25,13 @@ namespace ParticlePhysics.Type
         public Vector4 orientation;
         public Vector3 angularVelocity;
 
-        public static ParticleState[] GeneratePoint(int particleNum, Vector3 centerPos)
+        public static ParticleState[] GeneratePoint(int particleNum, Vector3 position)
         {
             var particles = new ParticleState[particleNum];
             var identityOrientation = Quaternion.identity;
             for (int i = 0; i < particleNum; i++)
             {
-                particles[i].position = centerPos;
+                particles[i].position = position;
                 particles[i].velocity = Vector3.zero;
                 particles[i].orientation = new Vector4(identityOrientation.x, identityOrientation.y, identityOrientation.z, identityOrientation.w);
                 particles[i].angularVelocity = Vector3.zero;
@@ -59,6 +59,20 @@ namespace ParticlePhysics.Type
             var particles = new ParticleState[verts.Count];
             var identityOrientation = Quaternion.identity;
             for (int i = 0; i < verts.Count; i++)
+            {
+                particles[i].position = verts[i];
+                particles[i].velocity = Vector3.zero;
+                particles[i].orientation = new Vector4(identityOrientation.x, identityOrientation.y, identityOrientation.z, identityOrientation.w);
+                particles[i].angularVelocity = Vector3.zero;
+            }
+            return particles;
+        }
+
+        public static ParticleState[] GenerateFromVertices(Vector3[] verts)
+        {
+            var particles = new ParticleState[verts.Length];
+            var identityOrientation = Quaternion.identity;
+            for (int i = 0; i < verts.Length; i++)
             {
                 particles[i].position = verts[i];
                 particles[i].velocity = Vector3.zero;

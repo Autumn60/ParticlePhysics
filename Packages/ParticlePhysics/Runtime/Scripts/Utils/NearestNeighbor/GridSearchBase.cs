@@ -44,6 +44,12 @@ namespace ParticlePhysics.Utils.NearestNeighbour
 
         public void GridSort(ref GraphicsBuffer objectsBufferInput)
         {
+            if (objectsBufferInput.count != numObjects)
+            {
+                InitializeBuffer(objectsBufferInput.count);
+                numObjects = objectsBufferInput.count;
+            }
+
             GridSearchCS.SetInt("_ParticleNum", objectsBufferInput.count);
             SetCSVariables();
 
