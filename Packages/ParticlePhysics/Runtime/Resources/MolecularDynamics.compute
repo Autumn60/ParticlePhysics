@@ -247,7 +247,7 @@ void TerrainCollisionCS(uint3 dispatchID : SV_DispatchThreadID)
 	float3 velocity = _ParticleBufferRead[P_ID].velocity;
 	
 	const uint2 pos = uint2(position.x * _Ratio.x, position.z * _Ratio.z); // Terrain座標（計算用）
-	
+
 	// Terrainとの衝突判定 => 衝突したら壁に沿って移動
 	float3 pa = position - float3(pos.x, _TerrainBuffer[pos.x + pos.y * _Resolution].height, pos.y);
 	float3 norm = _TerrainBuffer[pos.x + pos.y * _Resolution].normal;
@@ -284,7 +284,7 @@ void IntegrateCS(uint3 dispatchID : SV_DispatchThreadID)
 	if (particle.position.y < height)
 	{
 		particle.position.y = height;
-		norm = _TerrainBuffer[pos.x + pos.y * _Resolution].normal; // 法線ベクトル
+		norm = GetInterpolatedNormal(particle.position.x * _Ratio.x, particle.position.z * _Ratio.z); // 法線ベクトル
 		particle.velocity += dot(-particle.velocity, norm) * norm; // 速度ベクトルを壁に沿った向きに変換
 		particle.velocity *= _Friction; // 摩擦
 	}
